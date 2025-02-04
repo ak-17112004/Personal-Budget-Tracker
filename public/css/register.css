@@ -1,0 +1,65 @@
+
+.Registrationbox {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    margin-left: 35%;
+    text-align: left;
+    margin-top:20px;
+    margin-bottom: 20px;
+}
+
+#heading {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+}
+
+.Input {
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-field label {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.Input input,
+.Input select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+.Input input:focus,
+.Input select:focus {
+    border-color: #6a11cb;
+}
+
+.submit {
+    width: 100%;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: white;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+}
+@media  screen and (max-width:800px) {
+    .Registrationbox{
+        align-self: center;
+        margin: 20px 0px;
+
+    }
+}
