@@ -1,0 +1,21 @@
+
+<header class="nav-bar">
+    <div class="logo-box">
+        <img src="images/favicon.png" alt="logo" id="logo">
+        <h1 id="logo-text">Budget Buddy</h1>
+    </div>
+    <nav class="links">
+        <a href="/home" class="button">Home</a>
+        <a href="/present" class="button">Present</a>
+        <a href="/past" class="button">Past</a>
+        <div class="profile">
+            <img src=<%= userLogged.profile_img %> alt="profile" id="profileimg">
+            <p><%= userLogged.full_name %></p>
+            <ol id="profilelinks">
+                <li><a href="/changeprofile">Change profile</a></li>
+                <li><a href="/changepassword">change password</a></li>
+                <li><a href="/logout">Log out</a></li>
+            </ol>
+        </div>
+    </nav>
+</header>
