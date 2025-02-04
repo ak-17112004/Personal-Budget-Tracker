@@ -1,0 +1,53 @@
+<div class="Registrationbox">
+    <form class="registration-form" action="/adduser" method="post">
+        <h2 id="heading">Complete Your Details</h2>
+        <h3 style="color:red;text-transform: capitalize;"><%=status%></h3>
+        <div class="Input">
+            <label for="full-name">Full Name</label>
+            <input type="text" id="full-name" name="full_name" placeholder="Enter your full name" required>
+        </div>
+
+        <div class="Input">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+
+        <div class="Input">
+            <label for="gender">Gender</label>
+            <select name="gender" id="gender" required>
+                <option value="" disabled selected>Select your gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <div class="Input">
+            <label for="password">Enter Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        </div>
+
+        <div class="Input">
+            <label for="repassword">Re-enter Password</label>
+            <input type="password" id="repassword" name="repassword" placeholder="Re-enter your password" required>
+        </div>
+
+        <div class="Input">
+            <label for="security-question">Security Question</label>
+            <select name="security_question" id="security-question" required>
+                <option value="" disabled selected>Select a security question</option>
+                <option value="What is your first lover name?">What is your first lover name ?</option>
+                <option value="What was your favourite sports Game?">What was your favourite sports Game ?</option>
+                <option value="What is name of your best friend?">What is name of your best friend ?</option>
+                <option value="What is your current girl/boy friend name?">What is your current girl/boy friend name ?</option>
+            </select>
+        </div>
+
+        <div class="Input">
+            <label for="security-answer">Answer</label>
+            <input type="text" id="security-answer" name="security_answer" placeholder="Enter your answer" required>
+        </div>
+
+        <button type="submit" class="submit">Register</button>
+    </form>
+</div>
