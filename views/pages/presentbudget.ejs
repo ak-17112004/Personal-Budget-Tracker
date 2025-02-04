@@ -1,0 +1,180 @@
+<div class="centrebox">
+    <section>
+        <article class="one">
+            <form action="/addtracks" class="form-box" method="post">
+                <h2 class="header">Buddy Dashboard</h2>
+                <h3 style="color:red;">
+                    <%= userLogged.message1 %>
+                </h3>
+                <label for="amount">Enter your spending Amount : </label>
+                <input type="number" id="amount" name="amount" placeholder="Enter your spending Amount : " required>
+
+                <fieldset id="selection">
+                    <legend>Spending Category</legend>
+                    <div class="option">
+                        <label for="category1">Primary</label>
+                        <select id="category1" name="primary">
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="Medical">Medical</option>
+                            <option value="daily use groceries">Daily use Groceries</option>
+                            <option value="current bill">current Bill</option>
+                            <option value="gas bill">Gas Bill</option>
+                            <option value="water bill">water Bill</option>
+                            <option value="vegetables">vegetables</option>
+                            <option value="Room Rent">Room Rent</option>
+                            <option value="Education fees">Education fees</option>
+                            <option value="Transportation">Transportation</option>
+                        </select>
+                    </div>
+                    <div class="option">
+                        <label for="category2">Secondary</label>
+                        <select id="category2" name="secondary">
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="shopping">Shopping</option>
+                            <option value="traveling">Traveling</option>
+                            <option value="movies/parties">Movies/parties</option>
+                            <option value="recharges">Recharges</option>
+                            <option value="outside food">outside food</option>
+                        </select>
+                    </div>
+                    <div class="option3">
+                        <label for="others">others</label>
+                        <input type="text" id="others" name="others" placeholder=" Enter your spending category : ">
+                    </div>
+                </fieldset>
+                <label for="category3">Select above mentioned Category : </label>
+                <select id="category3" name="category" required>
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="primary">primary</option>
+                    <option value="secondary">secondary</option>
+                    <option value="others">others</option>
+                </select>
+
+                <label for="mode">Mode of Payment:</label>
+                <input type="text" id="mode" name="paymentmode" placeholder="Enter mode of payment" required>
+
+                <label for="person">Payment Receiver : </label>
+                <input type="text" id="person" name="paymentreceiver" placeholder="Enter payment Receiver" required>
+
+                <button type="submit">ADD</button>
+                <% if(!userLogged.budget_id){%>
+                    <div class="security2">
+                        You don't have any budget trackings
+                    </div>
+                    <%}%>
+            </form>
+        </article>
+        <article class="two">
+            <div class="leftbox">
+                <h2>Buddy Analytics</h2>
+                <form action="/check" class="centered-form" method="post">
+                    <label for="center-input">Enter Your Budget ID : </label>
+                    <input type="text" id="center-input" name="budget_id" placeholder="Enter Your Budget Id : "
+                        required><br>
+                    <button type="submit">Check</button>
+                </form>
+                <div class="circles">
+                    <div class="circle"
+                        style="width: 140px;
+                    height: 140px;
+                    background-color: white;
+                    border: 2px solid #000;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 20px;
+                    font-weight: 700;
+                    background: conic-gradient(blue 0% <%= userLogged.primary %>% , whitesmoke <%= userLogged.primary %>%  100%);">
+                        Primary</div>
+                    <div class="circle middle"
+                        style="width: 140px;
+                    height: 140px;
+                    background-color: white;
+                    border: 2px solid #000;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 20px;
+                    font-weight: 700;
+                    position: relative;
+                    top: 60px;
+                    background: conic-gradient(green 0% <%= userLogged.others %>% , whitesmoke <%= userLogged.others %>%  100%);">Others</div>
+                    <div class="circle"
+                        style="width: 140px;
+                    height: 140px;
+                    background-color: white;
+                    border: 2px solid #000;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 20px;
+                    font-weight: 700;
+                    background: conic-gradient(red 0% <%= userLogged.secondary %>% , whitesmoke <%= userLogged.secondary %>%  100%);">
+                        Secondary</div>
+                </div>
+            </div>
+            <div class="rightbox">
+                <table border="2">
+                    <tr>
+                        <th>Budget-ID</th>
+                        <th>Amount</th>
+                        <th>Category</th>
+                        <th>purpose</th>
+                        <th>Payment Mode</th>
+                        <th>Payment Receiver</th>
+                        <th>Date</th>
+                    </tr>
+
+                    <% userLogged.message2.forEach(users=>{%>
+                        <tr>
+                            <td>
+                                <%= users.budget_id %>
+                            </td>
+                            <td>
+                                <%= users.amount %>
+                            </td>
+                            <td>
+                                <%= users.category %>
+                            </td>
+                            <td>
+                                <%= users.purpose %>
+                            </td>
+                            <td>
+                                <%= users.paymentmode %>
+                            </td>
+                            <td>
+                                <%= users.paymentreceiver %>
+                            </td>
+                            <td>
+                                <%= users.date %>
+                            </td>
+                        </tr>
+                        <%})%>
+
+                </table>
+            </div>
+        </article>
+    </section>
+    <aside>
+        <div class="upperbox">
+            <h3 style="color:red;">Total spending</h3>
+            <p>Orange = Total spending</p>
+            <div id="circle"
+                style="height:150px; width:150px; border-radius:50%; 
+            border:1px solid black;background: conic-gradient(red 0% <%= userLogged.spendingpercent %>% , whitesmoke <%= userLogged.spendingpercent %>%  100%);">
+            </div>
+        </div>
+        <div class="lowerbox">
+            <h3 style="color:red;">Remaining Budget</h3>
+            <p>Blue = Total Remaining</p>
+            <div id="circle"
+                style="height:150px; width:150px; border-radius:50%; 
+            border:1px solid black;background: conic-gradient(Blue 0% <%= userLogged.remainingpercent %>% , white <%= userLogged.remainingpercent %>% 100%);">
+            </div>
+
+        </div>
+    </aside>
+</div>
