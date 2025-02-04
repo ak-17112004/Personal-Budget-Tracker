@@ -1,0 +1,18 @@
+<div class="align">
+    <div class="Loginparent">
+        <form action="/signin" method="post" id="loginform">
+            <h1 class="Loginname">LOGIN FORM</h1>
+            <h3 style="color:red;"><%=status%></h3>
+            <div class="Input">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="Input">
+                <label for="password">Enter Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <a href="/forgotpassword">Forgot Password</a>
+            <button type="submit" class="submit">Log In</button>
+        </form>
+    </div>
+</div>
