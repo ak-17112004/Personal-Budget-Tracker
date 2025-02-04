@@ -1,0 +1,47 @@
+<div class="display">
+    <% let boys=["/images/ajay.jpg","/images/nikhil.jpg","/images/aswath.jpg","/images/anji.jpg"] %>
+    <% let girls=["/images/others.png","/images/favicon.png","/images/girlprofile.jpeg"] %>
+
+    <h1>Buddy Profile changer </h1>
+    
+    
+    <% if(userLogged.gender==="Male"){%>
+        <form action="/upload" method="post">
+            <label for="photo">Choose your Profile Photo</label>
+            <select name="photo" id="photo" required>
+                <option value="" disabled selected>Choose you profile Id</option>
+                <% boys.forEach((ele,index)=>{%>
+                    <option value="<%= ele %>">Photo<%= index+1 %></option>
+                <%})%>
+            </select>
+            <button type="submit">Upload</button>
+        </form>
+        <div class="boxes">
+        <% boys.forEach((ele,index)=>{%>
+            <div class="card">
+                <img src="<%= ele %>" alt="image">
+                <h3>Photo ID : Photo<%= index+1%></h3>
+            </div>
+        <%})%>
+        </div>
+    <%} else{%>
+        <form action="/upload" method="post">
+            <label for="photo">Choose your Profile Photo : </label>
+            <select name="photo" id="photo">
+                <option value="" disabled selected>Choose you profile Id</option>
+                <% girls.forEach((ele,index)=>{%>
+                    <option value="<%= ele %>">Photo<%= index+1 %></option>
+                <%})%>
+            </select>
+            <button type="submit">Upload</button>
+        </form>
+        <div class="boxes">
+        <% girls.forEach((ele,index)=>{%>
+            <div class="card">
+                <img src="<%= ele %>" alt="image">
+                <h3>Photo<%= index+1%></h3>
+            </div>
+        <%})%>
+        </div>
+    <%}%>
+</div>
