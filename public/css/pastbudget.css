@@ -1,0 +1,78 @@
+
+.mainbox{
+    height:100vh;
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    gap:30px;
+    justify-content: center;
+    align-items: center;
+    padding:2rem;
+}
+#heading{
+    font-size: 2rem;
+    color:red;
+    font-weight: 700;
+}
+.filters{
+    height:60px;
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:70px;
+}
+.filters select{
+    height:28px;
+    width:170px;
+    border:1px solid black;
+    outline-color: darkmagenta;
+    border-radius: 0.4rem;
+    margin-left: 8px;
+}
+.cards{
+    height:auto;
+    width:100%;
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap:20px;
+}
+.card{
+    height:360px;
+    width:360px;
+    display: flex;
+    flex-direction: column;
+    border:1px solid black;
+    border-radius: 0.7rem;
+    box-shadow: 0 0 10px violet;
+    padding:20px;
+    gap:10px;
+    justify-content: center;
+    background-color: white;
+}
+.card h2{
+    align-self: center;
+    color:red;
+}
+.circles{
+    height:170px;
+    width:100%;
+    /* border:1px solid black; */
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 0.5rem;
+}
+.circle{
+    height:120px;
+    width:130px;
+    border-radius: 50%;
+    border:1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+}
