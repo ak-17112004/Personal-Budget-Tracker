@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Buddy</title>
+    <link rel="stylesheet" href="/css/start.css">
+    <% if(route==="/register" ){%>
+        <link rel="stylesheet" href="/css/register.css">
+    <%}else if(route==="/login" ){%>
+        <link rel="stylesheet" href="/css/register.css">
+        <link rel="stylesheet" href="/css/login.css">
+    <%}else if(route==="/present" ){%>
+        <link rel="stylesheet" href="/css/present_budget.css">
+    <%}else if(route==="/home" ){%>
+        <link rel="stylesheet" href="/css/home.css">
+    <%}else if(route==="/past" ){%>
+        <link rel="stylesheet" href="/css/past_budget.css">
+    <%}else if(route==="/changepassword"){%>
+        <link rel="stylesheet" href="/css/changepassword.css">
+    <%}else if(route==="/changeprofile"){%>
+        <link rel="stylesheet" href="/css/changeprofile.css">
+    <%}%>
+
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
+</head>
+
+<body>
+    <div class="container">
+        <% if (!userLogged) { %>
+            <%- include("./partials/header.ejs") %>
+        
+            <% if (route === "/") { %>
+                <%- include("./pages/start.ejs") %>
+            <% } else if (route === "/register") { %>
+                <%- include("./pages/register.ejs", { status }) %>
+            <% } else if (route === "/login") { %>
+                <%- include("./pages/login.ejs", { status }) %>
+            <% } %>
+        
+            <%- include("./partials/footer.ejs") %>
+        <% } else { %>
+            <%- include("./partials/header1.ejs") %>
+        
+            <% if (route === "/home") { %>
+                <%- include("./pages/home.ejs") %>
+            <% } else if (route === "/present") { %>
+                <%- include("./pages/present_budget.ejs") %>
+            <% } else if (route === "/past") { %>
+                <%- include("./pages/past_budget.ejs") %>
+            <% }else if(route==="/changepassword"){ %>
+                <%- include("./pages/changepassword.ejs") %>
+            <%}else if(route==="/changeprofile"){%>
+                <%- include("./pages/changeprofile.ejs") %>
+            <%}%>
+
+            <%- include("./partials/footer.ejs") %>
+        <% } %>
+        
+    </div>
+    <script>
+        let profile = document.querySelector("#profileimg")
+        let profilelinks = document.getElementById("profilelinks")
+        if (profile && profilelinks) {
+            profile.addEventListener("click", () => {
+                profilelinks.style.display = "flex";
+            })
+            profile.addEventListener("dblclick", () => {
+                profilelinks.style.display = "none";
+            })
+        }
+        //for pastbudget page
+        let year = document.getElementById("option1")
+        let month = document.getElementById("option2")
+        let cards = document.querySelector(".cards")
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        if (cards) {
+            year.addEventListener("change", async () => {
+                let currmonth = ""
+                if (month.value) {
+                    currmonth = months[Number(month.value)]
+                }
+                await fetch("http://localhost:3000/fetchdata", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ year: year.value, month: month.value })
+                }).then(rawData => rawData.json()).then((res) => {
+                    cards.innerHTML = ""
+                    res['trackerData'].forEach((ele) => {
+                        let spendpercent = (ele.totalspending / ele.budget) * 100
+                        let saved=ele.budget-ele.totalspending
+                        let savedpercent = (saved/ ele.budget) * 100
+                        let card = document.createElement("div")
+                        card.classList.add("card")
+                        let h1 = document.createElement("h2")
+                        h1.textContent = Number(year.value) + " " + currmonth
+                        let h2 = document.createElement("h3")
+                        h2.textContent = "Total Budget : " + ele.budget
+                        let h3 = document.createElement("h3")
+                        h3.textContent = "Budget Category : " + ele.budget_type
+                        let h4 = document.createElement("h3")
+                        h4.textContent = "Buddy status : " + ele.status
+                        let circles = document.createElement("div")
+                        circles.classList.add("circles")
+                        let circle1 = document.createElement("div")
+                        circle1.classList.add("circle")
+                        circle1.textContent = "Total Spending"
+                        circle1.style.background = `conic-gradient(red 0% ${spendpercent}%,white ${spendpercent}% 100%)`
+                        circles.appendChild(circle1)
+                        let circle2 = document.createElement("div")
+                        circle2.classList.add("circle")
+                        circle2.textContent = "Total saved"
+                        circle2.style.background = `conic-gradient(green 0% ${savedpercent}%,white ${savedpercent}% 100%)`
+                        circles.appendChild(circle2)
+                        card.appendChild(h1)
+                        card.appendChild(h2)
+                        card.appendChild(h3)
+                        card.appendChild(h4)
+                        card.appendChild(circles)
+                        cards.appendChild(card)
+                    })
+                })
+            })
+
+            month.addEventListener("change", async () => {
+                const curr = new Date()
+                let curryear = undefined
+                if (year.value === "") {
+                    curryear = curr.getFullYear()
+                }
+                else {
+                    curryear = Number(year.value)
+                }
+                await fetch("http://localhost:3000/fetchdata", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ year: curryear, month: month.value })
+                }).then(rawData => rawData.json()).then((res) => {
+                    cards.innerHTML = ""
+                    res['trackerData'].forEach((ele) => {
+                        let spendpercent = (ele.totalspending / ele.budget) * 100
+                        let saved=ele.budget-ele.totalspending
+                        let savedpercent = (saved/ ele.budget) * 100
+                        let card = document.createElement("div")
+                        card.classList.add("card")
+                        let h1 = document.createElement("h2")
+                        h1.textContent = curryear + " " + months[Number(month.value)]
+                        let h2 = document.createElement("h3")
+                        h2.textContent = "Total Budget : " + ele.budget
+                        let h3 = document.createElement("h3")
+                        h3.textContent = "Budget Category : " + ele.budget_type
+                        let h4 = document.createElement("h3")
+                        h4.textContent = "Buddy status : " + ele.status
+                        let circles = document.createElement("div")
+                        circles.classList.add("circles")
+                        let circle1 = document.createElement("div")
+                        circle1.classList.add("circle")
+                        circle1.textContent = "Total Spending"
+                        circle1.style.background = `conic-gradient(red 0% ${spendpercent}%,white ${spendpercent}% 100%)`
+                        circles.appendChild(circle1)
+                        let circle2 = document.createElement("div")
+                        circle2.classList.add("circle")
+                        circle2.textContent = "Total saved"
+                        circle2.style.background = `conic-gradient(green 0% ${savedpercent}%,white ${savedpercent}% 100%)`
+                        circles.appendChild(circle2)
+                        card.appendChild(h1)
+                        card.appendChild(h2)
+                        card.appendChild(h3)
+                        card.appendChild(h4)
+                        card.appendChild(circles)
+                        cards.appendChild(card)
+                    })
+                })
+            })
+        }
+
+        const moneyQuotes = [
+            "Money is a terrible master but an excellent servant. - P.T. Barnum",
+            "An investment in knowledge pays the best interest. - Benjamin Franklin",
+            "It’s not your salary that makes you rich; it’s your spending habits. - Charles A. Jaffe",
+            "The art is not in making money, but in keeping it. - Proverb",
+            "Don’t tell me what you value, show me your budget, and I’ll tell you what you value. - Joe Biden",
+            "Too many people spend money they haven’t earned, to buy things they don’t want, to impress people they don’t like. - Will Rogers",
+            "A budget is telling your money where to go instead of wondering where it went. - Dave Ramsey",
+            "Financial freedom is available to those who learn about it and work for it. - Robert Kiyosaki",
+            "Beware of little expenses; a small leak will sink a great ship. - Benjamin Franklin",
+            "Money often costs too much. - Ralph Waldo Emerson"
+        ];
+        const colors = ["Red", "Blue", "Green", "Yellow", "Orange", "Purple", "Pink", "Brown", "Gray", "Teal"];
+        const colors2 = ["white", "yellow", "white", "black", "black", "white", "black", "white", "white", "blue", "white"]
+
+
+
+        let html = document.querySelector(".moneyquotes")
+        let position = 1;
+        if (html) {
+            html.textContent = `${moneyQuotes[position]}`
+            html.style.backgroundColor = colors[`${position}`]
+            html.style.color = colors2[`${position}`]
+            const intervalId = setInterval(() => {
+                html.textContent = ""
+                html.textContent = `${moneyQuotes[position]}`
+                html.style.backgroundColor = colors[`${position}`]
+                html.style.color = colors2[`${position}`]
+                position = position + 1
+                if (position >= 10) {
+                    position = 0
+                }
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>
