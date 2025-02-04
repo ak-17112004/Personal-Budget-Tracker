@@ -1,0 +1,102 @@
+<div class="layout">
+    <section>
+        <article class="one">
+            <form action="/submitbudget" class="trackerbox" method="post">
+                <h2>Budget Tracker</h2>
+                <h3 style="color:red;"><%= userLogged.track_message %></h3>
+                <label for="amount">Enter your Amount : </label>
+                <input type="text" id="amount" name="budget" placeholder="Enter amount : " required>
+
+                <label for="option">Select Budget Type</label>
+                <select name="budget_type" id="option" required>
+                    <option value="" disabled selected>choose your choice</option>
+                    <option value="year">Yearly</option>
+                    <option value="month">Monthly</option>
+                    <option value="week">Weekly</option>
+                </select>
+                <button type="submit">Create Buddy</button>
+                <% if(userLogged.status==="active"){%>
+                    <div id="security1">You have Active Budget Tracker</div>
+                <%}%>
+            </form>
+        </article>
+        <article class="two">
+            <div class="tablebox">
+                <h2>Budget-ID Finder</h2>
+                <form action="/search" class="filters" method="post">
+                    <span>
+                        <label for="option1">Year</label>
+                        <select name="year" id="option1" required>
+                            <option value="" disabled selected>choose your choice</option>
+                            <% for(let i=userLogged.startyear;i<=userLogged.endyear;i++){%>
+                                <option value="<%= i%>"><%= i%></option>
+                            <%}%>
+                        </select>
+                    </span>
+                    <span>
+                        <label for="option2">Month</label>
+                        <select name="month" id="option2" required>
+                            <option value="" disabled selected>choose your choice</option>
+                            <option value="0">January</option>
+                            <option value="1">February</option>
+                            <option value="2">March</option>
+                            <option value="3">April</option>
+                            <option value="4">May</option>
+                            <option value="5">June</option>
+                            <option value="6">July</option>
+                            <option value="7">August</option>
+                            <option value="8">September</option>
+                            <option value="9">October</option>
+                            <option value="10">November</option>
+                            <option value="11">December</option>
+                        </select>
+                    </span>
+                    <span>
+                        <button type="submit" id="search">Search</button>
+                    </span>
+                </form>
+                <div id="table">
+                    <table border="1">
+                        <tr>
+                            <th>Year</th>
+                            <th>Month</th>
+                            <th>Budget-ID</th>
+                            <th>Budget-Type</th>
+                        </tr>
+                        <% userLogged.finder.forEach(user => { %>
+                            <tr>
+                              <td><%= user.startDate.getFullYear() %></td>
+                              <td><%= user.startDate.getMonth() %></td>
+                              <td><%= user.budget_id %></td>
+                              <td><%= user.budget_type %></td>
+                            </tr>
+                          <% }) %>
+                    </table>
+                </div>
+            </div>
+        </article>
+    </section>
+    <aside>
+        <div class="upperbox">
+            <div class="circle">
+                <h3>Total Savings</h3>
+                <h3><%= userLogged.savingsAmount %></h3>
+            </div>
+            <form action="/savingsadd" class="savingsbox" method="post">
+                <h4><%= userLogged.issavings %></h4>
+                <label for="amount">Enter your Amount : </label>
+                <input type="number" id="amount" name="savingsmoney" placeholder="Enter amount : " required>
+
+                <label for="option">Select Amount Receiver</label>
+                <select name="receiver" id="option" required>
+                    <option value="" disabled selected>choose Receiver</option>
+                    <option value="current">Current Budget</option>
+                    <option value="New">Create New budget</option>
+                </select>
+                <button type="submit">Transfer</button>
+            </form>
+        </div>
+        <div class="moneyquotes">
+        </div>
+    </aside>
+</div>
